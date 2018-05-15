@@ -19,7 +19,7 @@ public interface Factory {
 	 * @param B
 	 * @return Discrete hidden Markov model
 	 */
-	HMM createDiscreteHMM(float[][] A, float[] PI, float[][] B);
+	HMM createDiscreteHMM(double[][] A, double[] PI, double[][] B);
 
 
 	/**
@@ -39,7 +39,7 @@ public interface Factory {
 	 * @param variances
 	 * @return
 	 */
-	HMM createNormalHMM(float[][] A, float[] PI, float[] means, float[] variances, float epsilon);
+	HMM createNormalHMM(double[][] A, double[] PI, double[] means, double[] variances, double epsilon);
 
 	
 	/**
@@ -49,7 +49,7 @@ public interface Factory {
 	 * @param means
 	 * @return
 	 */
-	HMM createExponentialHMM(float[][] A, float[] PI, float[] means, float epsilon);
+	HMM createExponentialHMM(double[][] A, double[] PI, double[] means, double epsilon);
 
 	
 	/**
@@ -60,5 +60,5 @@ public interface Factory {
 	 * @param variances
 	 * @return
 	 */
-	HMM createNormalMixtureHMM(float[][] A, float[] PI, float[][] means, float[][] variances, float[][] weights, float epsilon);
+	HMM createNormalMixtureHMM(double[][] A, double[] PI, double[][] means, double[][] variances, double[][] weights, double epsilon);
 }

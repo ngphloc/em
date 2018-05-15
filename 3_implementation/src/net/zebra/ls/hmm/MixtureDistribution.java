@@ -23,7 +23,7 @@ public final class MixtureDistribution implements Distribution {
 	/**
 	 * 
 	 */
-	protected List<Float> weights;
+	protected List<Double> weights;
 	
 	
 	/**
@@ -41,13 +41,13 @@ public final class MixtureDistribution implements Distribution {
 	 * @param dists
 	 * @param weights
 	 */
-	public MixtureDistribution(Distribution[] dists, float[] weights) {
+	public MixtureDistribution(Distribution[] dists, double[] weights) {
 		if (dists.length != weights.length)
 			throw new RuntimeException("Invalid parameters");
 		
 		this.dists.addAll(Arrays.asList(dists));
-		float sum = 0;
-		for (float weight : weights) {
+		double sum = 0;
+		for (double weight : weights) {
 			sum += weight;
 			this.weights.add(weight);
 		}
@@ -57,9 +57,9 @@ public final class MixtureDistribution implements Distribution {
 	
 	
 	@Override
-	public float getProb(Obs x) {
+	public double getProb(Obs x) {
 		// TODO Auto-generated method stub
-		float mprob = 0;
+		double mprob = 0;
 		int K = dists.size();
 		for (int k = 0; k < K; k++)
 			mprob += weights.get(k) * dists.get(k).getProb(x);
@@ -69,7 +69,7 @@ public final class MixtureDistribution implements Distribution {
 
 	
 	@Override
-	public float getProb(Obs x, int kComp) {
+	public double getProb(Obs x, int kComp) {
 		// TODO Auto-generated method stub
 		if (kComp < 0)
 			return getProb(x);
@@ -136,7 +136,7 @@ public final class MixtureDistribution implements Distribution {
 		}//End for k
 		
 		for (int k = 0; k < K; k++) {
-			float weight = (float)(numerators.get(k)/denominator);
+			double weight = numerators.get(k)/denominator;
 			weights.set(k, weight);
 		}
 	}
@@ -172,7 +172,7 @@ public final class MixtureDistribution implements Distribution {
 	 * @param weights
 	 * @return
 	 */
-	public static MixtureDistribution createNormalMixture(float[] means, float[] variances, float[] weights) {
+	public static MixtureDistribution createNormalMixture(double[] means, double[] variances, double[] weights) {
 		MixtureDistribution mdist = new MixtureDistribution();
 		int n = weights.length;
 		for (int i = 0; i < n; i++) {

@@ -24,13 +24,13 @@ public class DefaultHMM implements AutoCloseable {
 	/**
 	 * Variable A represents transition probability matrix.
 	 */
-	protected List<List<Float>> A = null;
+	protected List<List<Double>> A = null;
 
 	
 	/**
 	 * Variable PI represents initial probability matrix.
 	 */
-	protected List<Float> PI = null;
+	protected List<Double> PI = null;
 
 	
 	/**
@@ -123,7 +123,7 @@ public class DefaultHMM implements AutoCloseable {
 	 * @param j=0,1,2...
 	 * @return Transition probability from state i=0,1,2... to state j=0,1,2...
 	 */
-	public float getA(int i, int j) {
+	public double getA(int i, int j) {
 		return A.get(i).get(j);
 	}
 
@@ -135,7 +135,7 @@ public class DefaultHMM implements AutoCloseable {
 	 * @param j=0,1,2...
 	 * @param value Specified value for transition probability from state i=0,1,2... to state j=0,1,2....
 	 */
-	public void setA(int i, int j, float value) {
+	public void setA(int i, int j, double value) {
 		A.get(i).set(j, value);
 	}
 
@@ -146,7 +146,7 @@ public class DefaultHMM implements AutoCloseable {
 	 * @param i=0,1,2...
 	 * @return Initial probability at state i=0,1,2....
 	 */
-	public float getPI(int i) {
+	public double getPI(int i) {
 		return PI.get(i);
 	}
 
@@ -156,7 +156,7 @@ public class DefaultHMM implements AutoCloseable {
 	 * @param i
 	 * @param value
 	 */
-	public void setPI(int i, float value) {
+	public void setPI(int i, double value) {
 		PI.set(i, value);
 	}
 
@@ -171,7 +171,7 @@ public class DefaultHMM implements AutoCloseable {
 	 * @return Observation probability at state i and observation j in both discrete case 
 	 * and continuous case
 	 */
-	public float getB(int i, Obs x, int kComp) {
+	public double getB(int i, Obs x, int kComp) {
 		return B.get(i).getProb(x, kComp);
 	}
 	
@@ -811,7 +811,7 @@ public class DefaultHMM implements AutoCloseable {
 	 * @param X
 	 * @return
 	 */
-	public double path(List<Obs> O, List<Float> X) {
+	public double path(List<Obs> O, List<Double> X) {
 		double path = weight(O.get(0), X.get(0).intValue());
 		int T = O.size() - 1;
 		for (int t = 1; t <= T; t++) {
@@ -1092,7 +1092,7 @@ public class DefaultHMM implements AutoCloseable {
 					continue;
 				
 				for (int j = 0; j < n; j++) {
-					this.setA(i, j, (float)(numerators.get(j)/denominator));
+					this.setA(i, j, numerators.get(j)/denominator);
 				}
 			}//End for i
 			
@@ -1107,7 +1107,7 @@ public class DefaultHMM implements AutoCloseable {
 			}
 			if (denominator != 0) {
 				for (int j = 0; j < n; j++) {
-					this.PI.set(j, (float)(numerators.get(j)/denominator));
+					this.PI.set(j, numerators.get(j)/denominator);
 				}
 			}
 			
@@ -1377,7 +1377,7 @@ public class DefaultHMM implements AutoCloseable {
 			
 			for (int j = 0; j < n; j++) {
 				double numerator = numerators.get(j);
-				this.setA(i, j, (float)(numerator/denominator));
+				this.setA(i, j, numerator/denominator);
 			}
 		}
 		
@@ -1392,7 +1392,7 @@ public class DefaultHMM implements AutoCloseable {
 		}
 		if (denominator != 0) {
 			for (int j = 0; j < n; j++) {
-				this.PI.set(j, (float)(numerators.get(j)/denominator));
+				this.PI.set(j, numerators.get(j)/denominator);
 			}
 		}
 		

@@ -14,7 +14,7 @@ public abstract class ContinuousDistribution extends AtomicDistribution {
 	/**
 	 * 
 	 */
-	protected float epsilon = Util.PROB_EPSILON;
+	protected double epsilon = Util.PROB_EPSILON;
 	
 	
 	/**
@@ -29,7 +29,7 @@ public abstract class ContinuousDistribution extends AtomicDistribution {
 	 * 
 	 * @return
 	 */
-	public float getEpsilon() {
+	public double getEpsilon() {
 		// TODO Auto-generated method stub
 		return epsilon;
 	}
@@ -39,7 +39,7 @@ public abstract class ContinuousDistribution extends AtomicDistribution {
 	 * 
 	 * @param epsilon
 	 */
-	public void setEpsilon(float epsilon) {
+	public void setEpsilon(double epsilon) {
 		// TODO Auto-generated method stub
 		this.epsilon = epsilon;
 	}

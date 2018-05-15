@@ -16,7 +16,7 @@ public class ProbabilityTable extends DiscreteDistribution {
 	/**
 	 * List of defined probabilities
 	 */
-	protected List<Float> probs;
+	protected List<Double> probs;
 	
 	
 	/**
@@ -29,9 +29,9 @@ public class ProbabilityTable extends DiscreteDistribution {
 		
 		probs = Util.newList(n);
 		if (n > 0)
-			probs.add(1f);
+			probs.add(1.0);
 		for (int i = 1; i < n; i++)
-			probs.add(0f);
+			probs.add(0.0);
 	}
 	
 	
@@ -45,14 +45,14 @@ public class ProbabilityTable extends DiscreteDistribution {
 	
 	
 	@Override
-	public float getProb(Obs x) {
+	public double getProb(Obs x) {
 		// TODO Auto-generated method stub
 		return probs.get((int)((MonoObs)x).value);
 	}
 
 
 	@Override
-	public float getProb(Obs x, int kComp) {
+	public double getProb(Obs x, int kComp) {
 		// TODO Auto-generated method stub
 		return getProb(x);
 	}
@@ -63,7 +63,7 @@ public class ProbabilityTable extends DiscreteDistribution {
 	 * @param x
 	 * @param prob
 	 */
-	public void setProb(float x, float prob) {
+	public void setProb(double x, double prob) {
 		// TODO Auto-generated method stub
 		probs.set((int)x, prob);
 	}
@@ -90,7 +90,7 @@ public class ProbabilityTable extends DiscreteDistribution {
 				numerator += ( (int)((MonoObs)(O.get(t))).value == k ) ? glist.get(t) : 0;
 			}//End for t
 			
-			setProb(k, (float)(numerator/denominator));
+			setProb(k, numerator/denominator);
 		}//End for k
 	}
 

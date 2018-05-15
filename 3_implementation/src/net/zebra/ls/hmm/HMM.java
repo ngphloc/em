@@ -30,7 +30,7 @@ public interface HMM {
 	 * @param stateJ
 	 * @return
 	 */
-	float a(int stateI, int stateJ);
+	double a(int stateI, int stateJ);
 	
 	
 	/**
@@ -38,7 +38,7 @@ public interface HMM {
 	 * @param stateI
 	 * @return
 	 */
-	float pi(int stateI);
+	double pi(int stateI);
 	
 	
 	/**
@@ -47,7 +47,7 @@ public interface HMM {
 	 * @param obs
 	 * @return
 	 */
-	float b(int stateI, Obs obs);
+	double b(int stateI, Obs obs);
 	
 	
 	/**

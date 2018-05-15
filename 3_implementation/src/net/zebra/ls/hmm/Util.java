@@ -17,7 +17,7 @@ final public class Util {
 	/**
 	 * 
 	 */
-	public final static float PROB_EPSILON = 0.01f;
+	public final static double PROB_EPSILON = 0.01f;
 
 	
 	/**

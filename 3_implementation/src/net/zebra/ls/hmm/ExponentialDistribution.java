@@ -23,23 +23,23 @@ class ExponentialDistribution extends ContinuousDistribution {
 	 * 
 	 * @param mean
 	 */
-	public ExponentialDistribution(float mean) {
+	public ExponentialDistribution(double mean) {
 		super();
 		setParameters(mean);
 	}
 
 
 	@Override
-	public float getProb(Obs x) {
+	public double getProb(Obs x) {
 		// TODO Auto-generated method stub
-		float value = ((MonoObs)x).value;
-		float epsilon = getEpsilon();
-		return (float)exp.probability(value - epsilon, value + epsilon);
+		double value = ((MonoObs)x).value;
+		double epsilon = getEpsilon();
+		return exp.probability(value - epsilon, value + epsilon);
 	}
 
 	
 	@Override
-	public float getProb(Obs x, int kComp) {
+	public double getProb(Obs x, int kComp) {
 		// TODO Auto-generated method stub
 		return getProb(x);
 	}
@@ -60,7 +60,7 @@ class ExponentialDistribution extends ContinuousDistribution {
 		}
 		if (denominator == 0)
 			return;
-		float mean = (float)(numerator/denominator);
+		double mean = numerator/denominator;
 
 		if (mean != 0)
 			setParameters(mean);
@@ -71,7 +71,7 @@ class ExponentialDistribution extends ContinuousDistribution {
 	 * 
 	 * @param mean
 	 */
-	public void setParameters(float mean) {
+	public void setParameters(double mean) {
 		exp = new org.apache.commons.math3.distribution.ExponentialDistribution(mean);
 	}
 

@@ -17,7 +17,7 @@ public class MonoObs implements Obs {
 	/**
 	 * 
 	 */
-	public float value;
+	public double value;
 	
 	
 	/**
@@ -33,7 +33,7 @@ public class MonoObs implements Obs {
 	 * 
 	 * @param value
 	 */
-	public MonoObs(float value) {
+	public MonoObs(double value) {
 		this.value = value;
 	}
 	
@@ -46,7 +46,7 @@ public class MonoObs implements Obs {
 	public static List<Obs> createObsList(Number...numbers) {
 		List<Obs> obsList = Util.newList(numbers.length);
 		for (Number number : numbers) {
-			obsList.add(new MonoObs(number.floatValue()));
+			obsList.add(new MonoObs(number.doubleValue()));
 		}
 		
 		return obsList;
@@ -79,7 +79,7 @@ public class MonoObs implements Obs {
 		List<Obs> obsList = Util.newList(size);
 		Random rnd = new Random();
 		for (int i = 0; i < size; i++) {
-			obsList.add(new MonoObs(rnd.nextFloat()));
+			obsList.add(new MonoObs(rnd.nextDouble()));
 		}
 		
 		return obsList;

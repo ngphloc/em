@@ -25,7 +25,7 @@ public class NormalDistribution extends ContinuousDistribution {
 	 * @param mean
 	 * @param variance
 	 */
-	public NormalDistribution(float mean, float variance) {
+	public NormalDistribution(double mean, double variance) {
 		super();
 		setParameters(mean, variance);
 	}
@@ -40,16 +40,16 @@ public class NormalDistribution extends ContinuousDistribution {
 	
 	
 	@Override
-	public float getProb(Obs x) {
+	public double getProb(Obs x) {
 		// TODO Auto-generated method stub
-		float value = ((MonoObs)x).value;
-		float epsilon = getEpsilon();
-		return (float)norm.probability(value - epsilon, value + epsilon);
+		double value = ((MonoObs)x).value;
+		double epsilon = getEpsilon();
+		return norm.probability(value - epsilon, value + epsilon);
 	}
 
 
 	@Override
-	public float getProb(Obs x, int kComp) {
+	public double getProb(Obs x, int kComp) {
 		// TODO Auto-generated method stub
 		return getProb(x);
 	}
@@ -72,14 +72,14 @@ public class NormalDistribution extends ContinuousDistribution {
 		}
 		if (denominator == 0)
 			return;
-		float mean = (float)(numerator1/denominator);
+		double mean = numerator1/denominator;
 		
 		double numerator2 = 0;
 		for (int t = 0; t <= T; t++) {
 			double d = ((MonoObs)(O.get(t))).value - mean;
 			numerator2 += G.get(t)*d*d;
 		}
-		float variance = (float)(numerator2/denominator);
+		double variance = numerator2/denominator;
 		
 		if (variance != 0)
 			setParameters(mean, variance);
@@ -91,7 +91,7 @@ public class NormalDistribution extends ContinuousDistribution {
 	 * @param mean
 	 * @param variance
 	 */
-	public void setParameters(float mean, float variance) {
+	public void setParameters(double mean, double variance) {
 		this.norm = new org.apache.commons.math3.distribution.NormalDistribution(mean, Math.sqrt(variance));
 	}
 	

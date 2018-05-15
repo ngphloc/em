@@ -19,10 +19,10 @@ public final class FactoryImpl implements Factory {
 	 * @param data
 	 * @return
 	 */
-	private static List<List<Float>> createMatrix(float[][] data) {
-		List<List<Float>> matrix = Util.newList(data.length);
+	private static List<List<Double>> createMatrix(double[][] data) {
+		List<List<Double>> matrix = Util.newList(data.length);
 		for (int i = 0; i < data.length; i++) {
-			List<Float> rowData = Util.newList(data[i].length);
+			List<Double> rowData = Util.newList(data[i].length);
 			for (int j = 0; j < data[i].length; j++) {
 				rowData.add(data[i][j]);
 			}
@@ -65,21 +65,21 @@ public final class FactoryImpl implements Factory {
 
 
 		@Override
-		public float a(int stateI, int stateJ) {
+		public double a(int stateI, int stateJ) {
 			// TODO Auto-generated method stub
 			return defaultHMM.getA(stateI, stateJ);
 		}
 
 
 		@Override
-		public float pi(int stateI) {
+		public double pi(int stateI) {
 			// TODO Auto-generated method stub
 			return defaultHMM.getPI(stateI);
 		}
 
 
 		@Override
-		public float b(int stateI, Obs obs) {
+		public double b(int stateI, Obs obs) {
 			// TODO Auto-generated method stub
 			return defaultHMM.getB(stateI, obs, -1);
 		}
@@ -125,7 +125,7 @@ public final class FactoryImpl implements Factory {
 	
 	
 	@Override
-	public HMM createDiscreteHMM(float[][] A, float[] PI, float[][] B) {
+	public HMM createDiscreteHMM(double[][] A, double[] PI, double[][] B) {
 		// TODO Auto-generated method stub
 		DefaultHMM defaultHMM = new DefaultHMM();
 		defaultHMM.A = createMatrix(A);
@@ -152,19 +152,19 @@ public final class FactoryImpl implements Factory {
 	public HMM createDiscreteHMM(int nState, int mObs) {
 		// TODO Auto-generated method stub
 		Random rnd = new Random();
-		float sum = 0;
+		double sum = 0;
 		
-		float[][] A = new float[nState][nState];
+		double[][] A = new double[nState][nState];
 		for (int i = 0; i < nState; i++) {
 			sum = 0;
 			for (int j = 0; j < nState; j++) {
-				float a = rnd.nextFloat();
+				double a = rnd.nextDouble();
 				A[i][j] = a;
 				sum += a;
 			}
 			if (sum == 0) {
 				int k = rnd.nextInt(nState);
-				while((A[i][k] = rnd.nextFloat()) != 0) {}
+				while((A[i][k] = rnd.nextDouble()) != 0) {}
 				sum = A[i][k];
 			}
 			
@@ -172,32 +172,32 @@ public final class FactoryImpl implements Factory {
 				A[i][j] = A[i][j] / sum;
 		}
 		
-		float[] PI = new float[nState];
+		double[] PI = new double[nState];
 		sum = 0;
 		for (int i = 0; i < nState; i++) {
-			float pi = rnd.nextFloat();
+			double pi = rnd.nextDouble();
 			PI[i] = pi;
 			sum += pi;
 		}
 		if (sum == 0) {
 			int k = rnd.nextInt(nState);
-			while((PI[k] = rnd.nextFloat()) != 0) {}
+			while((PI[k] = rnd.nextDouble()) != 0) {}
 			sum = PI[k];
 		}
 		for (int i = 0; i < nState; i++)
 			PI[i] = PI[i] / sum;
 		
-		float[][] B = new float[nState][mObs];
+		double[][] B = new double[nState][mObs];
 		for (int i = 0; i < nState; i++) {
 			sum = 0;
 			for (int j = 0; j < mObs; j++) {
-				float b = rnd.nextFloat();
+				double b = rnd.nextDouble();
 				B[i][j] = b;
 				sum += b;
 			}
 			if (sum == 0) {
 				int k = rnd.nextInt(mObs);
-				while((B[i][k] = rnd.nextFloat()) != 0) {}
+				while((B[i][k] = rnd.nextDouble()) != 0) {}
 				sum = B[i][k];
 			}
 			for (int j = 0; j < mObs; j++)
@@ -209,8 +209,8 @@ public final class FactoryImpl implements Factory {
 
 
 	@Override
-	public HMM createNormalHMM(float[][] A, float[] PI, float[] means,
-			float[] variances, float epsilon) {
+	public HMM createNormalHMM(double[][] A, double[] PI, double[] means,
+			double[] variances, double epsilon) {
 		// TODO Auto-generated method stub
 		DefaultHMM defaultHMM = new DefaultHMM();
 		defaultHMM.A = createMatrix(A);
@@ -232,7 +232,7 @@ public final class FactoryImpl implements Factory {
 
 
 	@Override
-	public HMM createExponentialHMM(float[][] A, float[] PI, float[] means, float epsilon) {
+	public HMM createExponentialHMM(double[][] A, double[] PI, double[] means, double epsilon) {
 		// TODO Auto-generated method stub
 		DefaultHMM defaultHMM = new DefaultHMM();
 		defaultHMM.A = createMatrix(A);
@@ -254,8 +254,8 @@ public final class FactoryImpl implements Factory {
 
 
 	@Override
-	public HMM createNormalMixtureHMM(float[][] A, float[] PI, float[][] means,
-			float[][] variances, float[][] weights, float epsilon) {
+	public HMM createNormalMixtureHMM(double[][] A, double[] PI, double[][] means,
+			double[][] variances, double[][] weights, double epsilon) {
 		// TODO Auto-generated method stub
 		DefaultHMM defaultHMM = new DefaultHMM();
 		defaultHMM.A = createMatrix(A);

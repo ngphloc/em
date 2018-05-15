@@ -4,6 +4,8 @@
 package net.zebra.ls.hmm;
 
 /**
+ * This interface represents a probability distribution.
+ * 
  * @author Loc Nguyen
  * @version 1.0
  *
@@ -14,10 +16,10 @@ public interface Distribution {
 	/**
 	 * Getting the defined probability at point x according to application.
 	 * 
-	 * @param x
+	 * @param x specified point.
 	 * @return defined probability at point x according to application.
 	 */
-	float getProb(Obs x);
+	double getProb(Obs x);
 	
 	
 	/**
@@ -26,7 +28,7 @@ public interface Distribution {
 	 * @param kComp
 	 * @return
 	 */
-	float getProb(Obs x, int kComp);
+	double getProb(Obs x, int kComp);
 	
 	
 }
