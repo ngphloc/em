@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/hudup-v11-runtime-lib.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.recommenders.jayes-2.6.0-158.jar" sourcepath="lib/src/org.eclipse.recommenders.jayes-2.6.0-158-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
