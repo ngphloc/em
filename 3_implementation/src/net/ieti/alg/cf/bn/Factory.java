@@ -22,9 +22,10 @@ public interface Factory {
 	
 	/**
 	 * Create a node in Bayesian network.
+	 * @param nodeName specified node name.
 	 * @return a node in Bayesian network.
 	 */
-	BNode createNode();
+	BNode createNode(String nodeName);
 	
 	
 }

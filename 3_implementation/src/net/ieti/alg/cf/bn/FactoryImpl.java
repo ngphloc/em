@@ -1,10 +1,15 @@
 package net.ieti.alg.cf.bn;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.recommenders.jayes.BayesNet;
 import org.eclipse.recommenders.jayes.BayesNode;
+import org.eclipse.recommenders.jayes.io.xmlbif.XMLBIFReader;
+import org.eclipse.recommenders.jayes.io.xmlbif.XMLBIFWriter;
 
 /**
  * This class is the default implementation of a factory.
@@ -24,9 +29,9 @@ public final class FactoryImpl implements Factory {
 
 	
 	@Override
-	public BNode createNode() {
+	public BNode createNode(String nodeName) {
 		// TODO Auto-generated method stub
-		return new BNodeWrapper();
+		return new BNodeWrapper(nodeName);
 	}
 
 	
@@ -66,6 +71,23 @@ public final class FactoryImpl implements Factory {
 			List<BayesNode> rootNodes = bayesNet.getNodes();
 			return BNodeWrapper.toNodeList(rootNodes);
 		}
+
+		@Override
+		public void load(InputStream in) throws IOException {
+			// TODO Auto-generated method stub
+			XMLBIFReader reader = new XMLBIFReader(in);
+			bayesNet = reader.read();
+			reader.close();
+		}
+
+		@Override
+		public void save(OutputStream out) throws IOException {
+			// TODO Auto-generated method stub
+			XMLBIFWriter writer = new XMLBIFWriter(out);
+			writer.write(bayesNet);
+			writer.close();
+		}
+
 		
 	}
 	
@@ -84,12 +106,28 @@ public final class FactoryImpl implements Factory {
 		private BayesNode bayesNode = null;
 		
 		/**
-		 * Default constructor.
+		 * Constructor with specified node name.
+		 * @param nodeName specified node name.
 		 */
-		BNodeWrapper() {
-			
+		@SuppressWarnings("deprecation")
+		BNodeWrapper(String nodeName) {
+			bayesNode = new BayesNode(nodeName);
 		}
 		
+		/**
+		 * Constructor with internal node.
+		 * @param bayesNode internal Bayesian node.
+		 */
+		private BNodeWrapper(BayesNode bayesNode) {
+			this.bayesNode = bayesNode;
+		}
+		
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return bayesNode.getName();
+		}
+
 		@Override
 		public void setParents(BNode... parentNodes) {
 			// TODO Auto-generated method stub
@@ -122,8 +160,7 @@ public final class FactoryImpl implements Factory {
 		private static List<BNode> toNodeList(List<BayesNode> bayesNodeList) {
 			List<BNode> nodeList = new ArrayList<BNode>();
 			for (BayesNode bayesNode : bayesNodeList) {
-				BNodeWrapper wrapper = new BNodeWrapper();
-				wrapper.bayesNode = bayesNode;
+				BNodeWrapper wrapper = new BNodeWrapper(bayesNode);
 				nodeList.add(wrapper);
 			}
 			

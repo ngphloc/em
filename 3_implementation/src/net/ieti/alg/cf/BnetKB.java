@@ -3,11 +3,21 @@
  */
 package net.ieti.alg.cf;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import net.hudup.core.alg.Alg;
 import net.hudup.core.alg.KBaseAbstract;
 import net.hudup.core.data.DataConfig;
 import net.hudup.core.data.Dataset;
+import net.hudup.core.data.Fetcher;
+import net.hudup.core.data.Profile;
+import net.hudup.core.logistic.UriAdapter;
+import net.hudup.core.logistic.xURI;
 import net.ieti.alg.cf.bn.BNet;
+import net.ieti.alg.cf.bn.EMLearning;
+import net.ieti.alg.cf.bn.Factory;
+import net.ieti.alg.cf.bn.FactoryImpl;
 
 /**
  * This class represents knowledge base for the collaborative filtering algorithm based on Bayesian network.
@@ -26,17 +36,41 @@ public class BnetKB extends KBaseAbstract {
 
 
 	/**
+	 * File extension of Bayesian network.
+	 */
+	public final static String BNET_FILEEXT = "bnet";
+	
+	
+	/**
 	 * Internal Bayesian network.
 	 */
 	protected BNet bnet = null;
 	
 	
+	/**
+	 * Default constructor.
+	 */
+	public BnetKB() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public void learn(Dataset dataset, Alg alg) {
 		// TODO Auto-generated method stub
 		super.learn(dataset, alg);
 		
-		//Coding here, learning Bayesian network from dataset.
+		//Modifying following code to learn Bayesian network from rating matrix.
+		try {
+			Fetcher<Profile> sample = dataset.fetchSample();
+			sample.close();
+			EMLearning learning = new EMLearning();
+			bnet = learning.learn(sample, null);
+		}
+		catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -45,7 +79,18 @@ public class BnetKB extends KBaseAbstract {
 		// TODO Auto-generated method stub
 		super.load();
 		
-		//Coding here, loading Bayesian network from file.
+		try {
+			UriAdapter adapter = new UriAdapter(config);
+			xURI bnetUri = getBNetUri();
+			
+			InputStream in = adapter.getInputStream(bnetUri);
+			bnet = getBnetFactory().createNetwork();
+			bnet.load(in);
+			in.close();
+		}
+		catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -53,17 +98,48 @@ public class BnetKB extends KBaseAbstract {
 	public void export(DataConfig storeConfig) {
 		// TODO Auto-generated method stub
 		super.export(storeConfig);
+		if (bnet == null)
+			return;
 		
-		//Coding here, saving Bayesian network to file.
+		try {
+			UriAdapter adapter = new UriAdapter(config);
+			xURI bnetUri = getBNetUri();
+			
+			OutputStream out = adapter.getOutputStream(bnetUri, true);
+			bnet.save(out);
+			out.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
+	/**
+	 * Getting default factory to create Bayesian network.
+	 * @return default factory to create Bayesian network.s
+	 */
+	protected Factory getBnetFactory() {
+		return new FactoryImpl();
+	}
+	
+	
 	/**
 	 * Getting Bayesian network.
 	 * @return Bayesian network.
 	 */
 	public BNet getBNet() {
 		return bnet;
+	}
+	
+	
+	/**
+	 * Getting default URI of unit storing Bayesian network.
+	 * @return default URI of unit storing Bayesian network.
+	 */
+	protected xURI getBNetUri() {
+		return config.getStoreUri().concat(
+				getName() + "." + BNET_FILEEXT);
 	}
 	
 	

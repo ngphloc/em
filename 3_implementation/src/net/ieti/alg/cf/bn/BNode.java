@@ -13,6 +13,13 @@ public interface BNode {
 
 	
 	/**
+	 * Getting node name.
+	 * @return node name.
+	 */
+	String getName();
+	
+	
+	/**
 	 * Setting parents nodes.
 	 * @param parentNodes specified parent nodes.
 	 */
