@@ -8,5 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/hudup.jar" sourcepath="lib/src/hudup-src.zip"/>
+	<classpathentry kind="lib" path="lib/runtime-lib.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
