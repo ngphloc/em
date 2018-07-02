@@ -66,12 +66,4 @@ public interface EM extends TestingAlg {
 	Object getEstimatedParameter();
 	
 	
-    /**
-     * Convert parameter to shown text.
-     * @param parameter specified parameter.
-     * @return shown text converted from specified parameter.
-     */
-    String parameterToShownText(Object parameter);
-    
-	
 }

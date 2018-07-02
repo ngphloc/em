@@ -67,13 +67,13 @@ public abstract class AbstractEM extends AbstractAlg implements EM {
 	/**
 	 * Current parameter.
 	 */
-	protected Object currentParameter = 0;
+	protected Object currentParameter = null;
 	
 	
 	/**
 	 * Current parameter.
 	 */
-	protected Object estimatedParameter = 0;
+	protected Object estimatedParameter = null;
 	
 	
 	/**
@@ -126,8 +126,7 @@ public abstract class AbstractEM extends AbstractAlg implements EM {
 		dataset = null;
 		
 		currentIteration = 0;
-		currentParameter = null;
-		estimatedParameter = null;
+		currentParameter = estimatedParameter;
 	}
 
 	
@@ -180,6 +179,13 @@ public abstract class AbstractEM extends AbstractAlg implements EM {
 	}
 
 
+	@Override
+	public synchronized Object getParameter() {
+		// TODO Auto-generated method stub
+		return getEstimatedParameter();
+	}
+	
+	
 	/**
 	 * Getting maximum number of iterations.
 	 * @return maximum number of iterations.

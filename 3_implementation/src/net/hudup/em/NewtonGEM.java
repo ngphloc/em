@@ -120,7 +120,7 @@ public abstract class NewtonGEM extends GEM {
 	
 	
 	@Override
-	public String parameterToShownText(Object parameter) {
+	public String parameterToShownText(Object parameter, Object...info) {
 		// TODO Auto-generated method stub
 		if (parameter == null || !(parameter instanceof double[]))
 			return "";

@@ -87,5 +87,4 @@ public class EMLearningEvent extends SetupAlgEvent {
 	}
 	
 	
-	
 }
