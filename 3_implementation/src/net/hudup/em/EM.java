@@ -18,7 +18,13 @@ public interface EM extends TestingAlg {
 	/**
 	 * Maximum number of iterations.
 	 */
-	public final static int EM_MAX_ITERATION = 10000;
+	final static int EM_MAX_ITERATION = 10000;
+	
+	
+	/**
+	 * Default epsilon for terminated condition, which is the bias between current parameter and estimated parameter. 
+	 */
+	final static double EM_DEFAULT_EPSILON = 0.001;
 	
 	
 	/**

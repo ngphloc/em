@@ -39,12 +39,6 @@ public abstract class AbstractEM extends AbstractAlg implements EM {
 	 * Name of epsilon field for EM, stored in configuration.
 	 */
 	protected final static String EM_EPSILON_FIELD = "em_epsilon";
-	
-	
-	/**
-	 * Default epsilon for terminated condition, which is the bias between current parameter and estimated parameter. 
-	 */
-	protected final static double EM_DEFAULT_EPSILON = 0.001;
 
 	
 	/**
