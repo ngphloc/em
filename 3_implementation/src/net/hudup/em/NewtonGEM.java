@@ -99,14 +99,22 @@ public abstract class NewtonGEM extends GEM {
 		// TODO Auto-generated method stub
 		double[] parameter1 = (double[])currentParameter;
 		double[] parameter2 = (double[])estimatedParameter;
-		double maxBias = 0;
+		double threshold = getConfig().getAsReal(EM_EPSILON_FIELD);
 		for (int i = 0; i < parameter1.length; i++) {
-			double bias = Math.abs(parameter1[i] - parameter2[i]);
-			if (maxBias < bias)
-				maxBias = bias;
+			if (parameter1[i] == 0) {
+				if (parameter2[i] == 0)
+					continue;
+				else
+					return false;
+			}
+			else {
+				double biasRatio = Math.abs(parameter2[i] - parameter1[i]) / Math.abs(parameter1[i]);
+				if (biasRatio > threshold)
+					return false;
+			}
 		}
 		
-		return maxBias <= getConfig().getAsReal(EM_EPSILON_FIELD);
+		return true;
 	}
 
 	
