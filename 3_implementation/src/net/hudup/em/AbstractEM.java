@@ -1,5 +1,15 @@
 package net.hudup.em;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.event.EventListenerList;
 
 import net.hudup.core.alg.AbstractAlg;
@@ -10,6 +20,7 @@ import net.hudup.core.data.DataConfig;
 import net.hudup.core.data.Dataset;
 import net.hudup.core.data.Fetcher;
 import net.hudup.core.data.Profile;
+import net.hudup.core.logistic.ui.UIUtil;
 
 
 /**
@@ -203,6 +214,42 @@ public abstract class AbstractEM extends AbstractAlg implements EM {
 		config.put(EM_EPSILON_FIELD, EM_DEFAULT_EPSILON);
 		config.put(EM_MAX_ITERATION_FIELD, EM_MAX_ITERATION);
 		return config;
+	}
+
+
+	@Override
+	public void manifest() {
+		// TODO Auto-generated method stub
+		JDialog manifestDlg = new JDialog(UIUtil.getFrameForComponent(null), "Manifest", true);
+		manifestDlg.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		manifestDlg.setLocationRelativeTo(null);
+		manifestDlg.setSize(400, 200);
+		manifestDlg.setLayout(new BorderLayout());
+		
+		JPanel body = new JPanel(new BorderLayout());
+		manifestDlg.add(body, BorderLayout.CENTER);
+		
+		JTextArea txtDesc = new JTextArea(getDescription());
+		txtDesc.setEditable(false);
+		txtDesc.setLineWrap(true);
+		txtDesc.setWrapStyleWord(true);
+		body.add(new JScrollPane(txtDesc), BorderLayout.CENTER);
+		
+		JPanel footer = new JPanel();
+		manifestDlg.add(footer, BorderLayout.SOUTH);
+		
+		JButton btnOK = new JButton("OK");
+		btnOK.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				manifestDlg.dispose();
+			}
+		});
+		footer.add(btnOK);
+		
+		manifestDlg.setVisible(true);
 	}
 
 
