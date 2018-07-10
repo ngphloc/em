@@ -6,7 +6,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import net.hudup.core.data.DataConfig;
-import net.hudup.core.parser.TextParserUtil;
+import net.hudup.core.logistic.MathUtil;
 
 /**
  * This abstract class implements partially expectation maximization (EM) algorithm associated Newton-Raphson method.
@@ -132,8 +132,16 @@ public abstract class NewtonGEM extends GEM {
 		// TODO Auto-generated method stub
 		if (parameter == null || !(parameter instanceof double[]))
 			return "";
+		
 		double[] array = (double[])parameter;
-		return TextParserUtil.toText(array, ",");
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < array.length; i++) {
+			if (i > 0)
+				buffer.append(", ");
+			buffer.append(MathUtil.format(array[i]));
+		}
+		
+		return buffer.toString();
 	}
 
 	
