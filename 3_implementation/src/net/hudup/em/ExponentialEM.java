@@ -46,6 +46,8 @@ public abstract class ExponentialEM extends AbstractEM {
 	@Override
 	public synchronized Object learn() throws Exception {
 		// TODO Auto-generated method stub
+		estimatedParameter = currentParameter = null;
+		currentIteration = 0;
 		estimatedParameter = currentParameter = initializeParameter();
 		if (estimatedParameter == null)
 			return null;
@@ -71,6 +73,11 @@ public abstract class ExponentialEM extends AbstractEM {
 				currentIteration++;
 			}
 		}
+		
+		if (estimatedParameter != null)
+			currentParameter = estimatedParameter;
+		else if (currentParameter != null)
+			estimatedParameter = currentParameter;
 		
 		return estimatedParameter;
 	}

@@ -129,9 +129,6 @@ public abstract class AbstractEM extends AbstractAlg implements EM {
 		if (dataset != null && dataset.isExclusive())
 			dataset.clear();
 		dataset = null;
-		
-		currentIteration = 0;
-		currentParameter = estimatedParameter;
 	}
 
 	
@@ -185,7 +182,7 @@ public abstract class AbstractEM extends AbstractAlg implements EM {
 
 
 	@Override
-	public synchronized Object getParameter() {
+	public Object getParameter() {
 		// TODO Auto-generated method stub
 		return getEstimatedParameter();
 	}
