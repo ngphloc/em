@@ -22,6 +22,7 @@ public abstract class GEM extends AbstractEM {
 	 */
 	public GEM() {
 		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	
@@ -49,7 +50,7 @@ public abstract class GEM extends AbstractEM {
 				break;
 			
 			//Firing event
-			fireSetupEvent(new EMLearningEvent(this, getDataset(), null));
+			fireSetupEvent(new EMLearningEvent(this, this.dataset, null));
 			
 			boolean terminated = terminatedCondition(currentParameter, estimatedParameter);
 			if (terminated)

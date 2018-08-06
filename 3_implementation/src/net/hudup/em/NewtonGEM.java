@@ -47,6 +47,7 @@ public abstract class NewtonGEM extends GEM {
 	 */
 	public NewtonGEM() {
 		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	

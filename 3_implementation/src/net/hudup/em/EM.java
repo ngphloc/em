@@ -1,7 +1,6 @@
 package net.hudup.em;
 
 import net.hudup.core.alg.TestingAlg;
-import net.hudup.core.data.Dataset;
 
 
 /**
@@ -25,30 +24,6 @@ public interface EM extends TestingAlg {
 	 * Default epsilon for terminated condition, which is the bias between current parameter and estimated parameter. 
 	 */
 	final static double EM_DEFAULT_EPSILON = 0.001;
-	
-	
-	/**
-	 * Setting up this EM based on specified dataset.
-	 * In this current version, this method initialize the data sample for learning parameter.
-	 * @param dataset specified dataset.
-	 * @param info additional parameters to set up this EM. This parameter is really an array of sub-parameters.
-	 * @throws Exception if any error raises.
-	 */
-	void setup(Dataset dataset, Object... info) throws Exception;
-
-	
-	/**
-	 * Unset this EM. After this method is called, this EM cannot be used unless the method {@link #setup(Dataset, Object...)} is called again.
-	 */
-	public void unsetup();
-	
-	
-	/**
-	 * Main method to learn parameters.
-	 * @return the parameter to be learned.
-	 * @exception Exception if any error occurs.
-	 */
-	public Object learn() throws Exception;
 	
 	
 	/**

@@ -22,6 +22,7 @@ public abstract class ExponentialEM extends AbstractEM {
 	 */
 	public ExponentialEM() {
 		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	
@@ -63,7 +64,7 @@ public abstract class ExponentialEM extends AbstractEM {
 				break;
 			
 			//Firing event
-			fireSetupEvent(new EMLearningEvent(this, getDataset(), currentStatistic));
+			fireSetupEvent(new EMLearningEvent(this, this.dataset, currentStatistic));
 			
 			boolean terminated = terminatedCondition(currentParameter, estimatedParameter);
 			if (terminated)
