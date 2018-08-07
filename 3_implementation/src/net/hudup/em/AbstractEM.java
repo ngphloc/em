@@ -1,7 +1,10 @@
 package net.hudup.em;
 
 import net.hudup.core.alg.AbstractTestingAlg;
+import net.hudup.core.alg.SetupAlgEvent;
+import net.hudup.core.alg.SetupAlgEvent.Type;
 import net.hudup.core.data.DataConfig;
+import net.hudup.core.data.Dataset;
 
 
 /**
@@ -57,6 +60,23 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	public AbstractEM() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	
+	@Override
+	public synchronized void setup(Dataset dataset, Object... info) throws Exception {
+		unsetup();
+		this.dataset = dataset;
+		this.sample = dataset.fetchSample();
+		learn();
+		
+		SetupAlgEvent evt = new SetupAlgEvent(
+				this,
+				Type.done,
+				this,
+				dataset,
+				" (t = " + this.getCurrentIteration() + ") learned models: " + this.getDescription());
+		fireSetupEvent(evt);
 	}
 
 	
