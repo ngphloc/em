@@ -128,6 +128,18 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	
 	
 	/**
+	 * Setting specified parameter and iteration to this regression model. Please use this method carefully.
+	 * @param parameter specified parameter.
+	 * @param iteration current parameter.
+	 */
+	public synchronized void setParameter(Object parameter, int iteration) {
+		this.currentParameter = parameter;
+		this.estimatedParameter = parameter;
+		this.currentIteration = iteration;
+	}
+	
+	
+	/**
 	 * Getting maximum number of iterations.
 	 * @return maximum number of iterations.
 	 */
