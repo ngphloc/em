@@ -29,14 +29,15 @@ public abstract class GEM extends AbstractEM {
 	/**
 	 * Finding a maximizer of the conditional expectation Q based on current parameter.
 	 * @param currentParameter current parameter.
+	 * @param info additional information.
 	 * @return a maximizer of the conditional expectation Q based on current parameter.
 	 * @throws Exception if any error raises.
 	 */
-	protected abstract Object argmaxQ(Object currentParameter) throws Exception;
+	protected abstract Object argmaxQ(Object currentParameter, Object...info) throws Exception;
 	
 	
 	@Override
-	public synchronized Object learn() throws Exception {
+	public synchronized Object learn(Object...info) throws Exception {
 		// TODO Auto-generated method stub
 		estimatedParameter = currentParameter = initializeParameter();
 		if (estimatedParameter == null)

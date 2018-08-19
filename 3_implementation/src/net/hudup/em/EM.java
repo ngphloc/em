@@ -47,4 +47,10 @@ public interface EM extends TestingAlg {
 	Object getEstimatedParameter();
 	
 	
+	/**
+	 * Getting current statistics.
+	 * @return current statistics. Return null if the algorithm does not run yet or run failed.
+	 */
+	Object getStatistics();
+	
 }

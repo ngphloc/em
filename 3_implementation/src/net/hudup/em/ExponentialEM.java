@@ -29,23 +29,25 @@ public abstract class ExponentialEM extends AbstractEM {
 	/**
 	 * This method implement expectation step (E-step) of EM.
 	 * @param currentParameter current parameter.
+	 * @param info additional information.
 	 * @return sufficient statistic given current parameter.
 	 * @throws Exception if any error raises
 	 */
-	protected abstract Object expectation(Object currentParameter) throws Exception;
+	protected abstract Object expectation(Object currentParameter, Object...info) throws Exception;
 	
 	
 	/**
 	 * This method implement maximization step (M-step) of EM.
 	 * @param currentStatistic current sufficient statistic.
+	 * @param info additional information.
 	 * @return estimated parameter given current sufficient statistic.
 	 * @throws Exception if any error raises
 	 */
-	protected abstract Object maximization(Object currentStatistic) throws Exception;
+	protected abstract Object maximization(Object currentStatistic, Object...info) throws Exception;
 	
 	
 	@Override
-	public synchronized Object learn() throws Exception {
+	public synchronized Object learn(Object...info) throws Exception {
 		// TODO Auto-generated method stub
 		estimatedParameter = currentParameter = null;
 		currentIteration = 0;
@@ -56,15 +58,15 @@ public abstract class ExponentialEM extends AbstractEM {
 		currentIteration = 1;
 		int maxIteration = getMaxIteration();
 		while(currentIteration < maxIteration) {
-			Object currentStatistic = expectation(currentParameter);
-			if (currentStatistic == null)
+			statistics = expectation(currentParameter);
+			if (statistics == null)
 				break;
-			estimatedParameter = maximization(currentStatistic);
+			estimatedParameter = maximization(statistics);
 			if (estimatedParameter == null)
 				break;
 			
 			//Firing event
-			fireSetupEvent(new EMLearningEvent(this, this.dataset, currentStatistic));
+			fireSetupEvent(new EMLearningEvent(this, this.dataset, statistics));
 			
 			boolean terminated = terminatedCondition(currentParameter, estimatedParameter);
 			if (terminated)

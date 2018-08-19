@@ -1,10 +1,16 @@
 package net.hudup.em;
 
+import java.util.Arrays;
+import java.util.List;
+
+import net.hudup.core.Util;
 import net.hudup.core.alg.AbstractTestingAlg;
 import net.hudup.core.alg.SetupAlgEvent;
 import net.hudup.core.alg.SetupAlgEvent.Type;
 import net.hudup.core.data.DataConfig;
 import net.hudup.core.data.Dataset;
+import net.hudup.core.data.Fetcher;
+import net.hudup.core.data.Profile;
 
 
 /**
@@ -55,6 +61,12 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	
 	
 	/**
+	 * Current statistics.
+	 */
+	protected Object statistics = null;
+
+	
+	/**
 	 * Default constructor.
 	 */
 	public AbstractEM() {
@@ -63,11 +75,18 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public synchronized void setup(Dataset dataset, Object... info) throws Exception {
 		unsetup();
 		this.dataset = dataset;
-		this.sample = dataset.fetchSample();
+		if (info != null && info.length > 0 && (info[0] instanceof Fetcher<?>))
+			this.sample = (Fetcher<Profile>)info[0];
+		else
+			this.sample = dataset.fetchSample();
+		
+		this.estimatedParameter = this.currentParameter = this.statistics = null;
+		this.currentIteration = 0;
 		learn();
 		
 		SetupAlgEvent evt = new SetupAlgEvent(
@@ -80,6 +99,17 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	}
 
 	
+	@Override
+	public void setup(Fetcher<Profile> sample, Object... info) throws Exception {
+		// TODO Auto-generated method stub
+		List<Object> additionalInfo = Util.newList();
+		additionalInfo.add(sample);
+		additionalInfo.addAll(Arrays.asList(info));
+
+		setup((Dataset)null, additionalInfo.toArray());
+	}
+
+
 	/**
 	 * Initializing parameter at the first iteration of EM process.
 	 * @return initialized parameter at the first iteration of EM process.
@@ -155,6 +185,13 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	}
 	
 	
+	@Override
+	public synchronized Object getStatistics() {
+		// TODO Auto-generated method stub
+		return statistics;
+	}
+
+
 	@Override
 	public DataConfig createDefaultConfig() {
 		// TODO Auto-generated method stub

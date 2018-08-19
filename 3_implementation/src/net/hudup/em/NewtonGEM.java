@@ -70,7 +70,7 @@ public abstract class NewtonGEM extends GEM {
 	
 	
 	@Override
-	protected Object argmaxQ(Object currentParameter) throws Exception {
+	protected Object argmaxQ(Object currentParameter, Object...info) throws Exception {
 		// TODO Auto-generated method stub
 		int newtonType = getConfig().getAsInt(GEM_NEWTON_TYPE_FIELD);
 		RealVector theta = new ArrayRealVector((double[])currentParameter);
