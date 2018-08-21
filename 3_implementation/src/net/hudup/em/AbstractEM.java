@@ -121,12 +121,13 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	 * Setting the terminated condition for EM.
 	 * The usual terminated condition is that the bias between current parameter and estimated parameter is smaller than a positive predefined epsilon.
 	 * However the terminated condition is dependent on particular application.
-	 * @param currentParameter current parameter.
 	 * @param estimatedParameter estimated parameter.
+	 * @param currentParameter current parameter.
+	 * @param previousParameter previous parameter.
 	 * @param info additional information.
 	 * @return true if the EM algorithm can stop.
 	 */
-	protected abstract boolean terminatedCondition(Object currentParameter, Object estimatedParameter, Object... info);
+	protected abstract boolean terminatedCondition(Object estimatedParameter, Object currentParameter, Object previousParameter, Object... info);
 	
 	
 	@Override

@@ -39,6 +39,9 @@ public abstract class GEM extends AbstractEM {
 	@Override
 	public synchronized Object learn(Object...info) throws Exception {
 		// TODO Auto-generated method stub
+		Object previousParameter = null;
+		estimatedParameter = currentParameter = previousParameter = null;
+		currentIteration = 0;
 		estimatedParameter = currentParameter = initializeParameter();
 		if (estimatedParameter == null)
 			return null;
@@ -53,10 +56,11 @@ public abstract class GEM extends AbstractEM {
 			//Firing event
 			fireSetupEvent(new EMLearningEvent(this, this.dataset, null));
 			
-			boolean terminated = terminatedCondition(currentParameter, estimatedParameter);
+			boolean terminated = terminatedCondition(estimatedParameter, currentParameter, previousParameter);
 			if (terminated)
 				break;
 			else {
+				previousParameter = currentParameter;
 				currentParameter = estimatedParameter;
 				currentIteration++;
 			}

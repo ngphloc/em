@@ -96,7 +96,7 @@ public abstract class NewtonGEM extends GEM {
 
 	
 	@Override
-	protected boolean terminatedCondition(Object currentParameter, Object estimatedParameter, Object... info) {
+	protected boolean terminatedCondition(Object estimatedParameter, Object currentParameter, Object previousParameter, Object... info) {
 		// TODO Auto-generated method stub
 		double[] parameter1 = (double[])currentParameter;
 		double[] parameter2 = (double[])estimatedParameter;

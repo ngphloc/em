@@ -49,7 +49,8 @@ public abstract class ExponentialEM extends AbstractEM {
 	@Override
 	public synchronized Object learn(Object...info) throws Exception {
 		// TODO Auto-generated method stub
-		estimatedParameter = currentParameter = null;
+		Object previousParameter = null;
+		estimatedParameter = currentParameter = previousParameter = null;
 		currentIteration = 0;
 		estimatedParameter = currentParameter = initializeParameter();
 		if (estimatedParameter == null)
@@ -68,10 +69,11 @@ public abstract class ExponentialEM extends AbstractEM {
 			//Firing event
 			fireSetupEvent(new EMLearningEvent(this, this.dataset, statistics));
 			
-			boolean terminated = terminatedCondition(currentParameter, estimatedParameter);
+			boolean terminated = terminatedCondition(estimatedParameter, currentParameter, previousParameter);
 			if (terminated)
 				break;
 			else {
+				previousParameter = currentParameter;
 				currentParameter = estimatedParameter;
 				currentIteration++;
 			}
