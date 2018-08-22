@@ -49,6 +49,12 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	
 	
 	/**
+	 * Previous parameter.
+	 */
+	protected Object previousParameter = null;
+
+	
+	/**
 	 * Current parameter.
 	 */
 	protected Object currentParameter = null;
@@ -85,7 +91,7 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 		else
 			this.sample = dataset.fetchSample();
 		
-		this.estimatedParameter = this.currentParameter = this.statistics = null;
+		this.estimatedParameter = this.currentParameter = this.previousParameter = this.statistics = null;
 		this.currentIteration = 0;
 		learn();
 		
@@ -136,7 +142,17 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 		return currentIteration;
 	}
 
+	
+	/**
+	 * Getting previous parameter.
+	 * @return previous parameter.
+	 */
+	public synchronized Object getPreviousParameter() {
+		// TODO Auto-generated method stub
+		return previousParameter;
+	}
 
+	
 	@Override
 	public synchronized Object getCurrentParameter() {
 		// TODO Auto-generated method stub
@@ -193,6 +209,15 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	}
 
 
+	/**
+	 * Setting current statistics.
+	 * @param statistics specified statistics.
+	 */
+	public synchronized void setStatistics(Object statistics) {
+		this.statistics = statistics;
+	}
+	
+	
 	@Override
 	public DataConfig createDefaultConfig() {
 		// TODO Auto-generated method stub
