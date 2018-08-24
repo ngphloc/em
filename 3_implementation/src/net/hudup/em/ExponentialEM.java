@@ -49,41 +49,43 @@ public abstract class ExponentialEM extends AbstractEM {
 	@Override
 	public synchronized Object learn(Object...info) throws Exception {
 		// TODO Auto-generated method stub
-		estimatedParameter = currentParameter = previousParameter = null;
-		currentIteration = 0;
-		estimatedParameter = currentParameter = initializeParameter();
-		if (estimatedParameter == null)
+		this.estimatedParameter = this.currentParameter = this.previousParameter = this.statistics = null;
+		this.currentIteration = 0;
+		this.estimatedParameter = this.currentParameter = initializeParameter();
+		if (this.estimatedParameter == null)
 			return null;
 		
-		currentIteration = 1;
+		this.currentIteration = 1;
 		int maxIteration = getMaxIteration();
-		while(currentIteration < maxIteration) {
-			statistics = expectation(currentParameter);
-			if (statistics == null)
+		while(this.currentIteration < maxIteration) {
+			Object tempStatistics = expectation(this.currentParameter);
+			if (tempStatistics == null)
 				break;
-			estimatedParameter = maximization(statistics);
-			if (estimatedParameter == null)
+			
+			this.statistics = tempStatistics;
+			this.estimatedParameter = maximization(this.statistics);
+			if (this.estimatedParameter == null)
 				break;
 			
 			//Firing event
-			fireSetupEvent(new EMLearningEvent(this, this.dataset, statistics));
+			fireSetupEvent(new EMLearningEvent(this, this.dataset, this.statistics));
 			
-			boolean terminated = terminatedCondition(estimatedParameter, currentParameter, previousParameter);
+			boolean terminated = terminatedCondition(this.estimatedParameter, this.currentParameter, this.previousParameter);
 			if (terminated)
 				break;
 			else {
-				previousParameter = currentParameter;
-				currentParameter = estimatedParameter;
-				currentIteration++;
+				this.previousParameter = this.currentParameter;
+				this.currentParameter = this.estimatedParameter;
+				this.currentIteration++;
 			}
 		}
 		
-		if (estimatedParameter != null)
-			currentParameter = estimatedParameter;
-		else if (currentParameter != null)
-			estimatedParameter = currentParameter;
+		if (this.estimatedParameter != null)
+			this.currentParameter = this.estimatedParameter;
+		else if (this.currentParameter != null)
+			this.estimatedParameter = this.currentParameter;
 		
-		return estimatedParameter;
+		return this.estimatedParameter;
 	}
 
 

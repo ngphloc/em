@@ -39,33 +39,34 @@ public abstract class GEM extends AbstractEM {
 	@Override
 	public synchronized Object learn(Object...info) throws Exception {
 		// TODO Auto-generated method stub
-		estimatedParameter = currentParameter = previousParameter = null;
-		currentIteration = 0;
-		estimatedParameter = currentParameter = initializeParameter();
-		if (estimatedParameter == null)
+		this.estimatedParameter = this.currentParameter = this.previousParameter = this.statistics = null;
+		this.currentIteration = 0;
+		this.estimatedParameter = this.currentParameter = initializeParameter();
+		if (this.estimatedParameter == null)
 			return null;
 		
-		currentIteration = 1;
+		this.currentIteration = 1;
 		int maxIteration = getMaxIteration();
-		while(currentIteration < maxIteration) {
-			estimatedParameter = argmaxQ(currentParameter);
-			if (estimatedParameter == null)
+		while(this.currentIteration < maxIteration) {
+			this.estimatedParameter = argmaxQ(this.currentParameter);
+			if (this.estimatedParameter == null)
 				break;
 			
 			//Firing event
 			fireSetupEvent(new EMLearningEvent(this, this.dataset, null));
 			
-			boolean terminated = terminatedCondition(estimatedParameter, currentParameter, previousParameter);
+			boolean terminated = terminatedCondition(this.estimatedParameter, this.currentParameter, this.previousParameter);
 			if (terminated)
 				break;
 			else {
-				previousParameter = currentParameter;
-				currentParameter = estimatedParameter;
-				currentIteration++;
+				this.previousParameter = this.currentParameter;
+				this.currentParameter = this.estimatedParameter;
+				this.currentIteration++;
 			}
 			
 		}
-		return estimatedParameter;
+		
+		return this.estimatedParameter;
 	}
 
 
