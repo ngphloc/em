@@ -42,8 +42,11 @@ public abstract class GEM extends AbstractEM {
 		this.estimatedParameter = this.currentParameter = this.previousParameter = this.statistics = null;
 		this.currentIteration = 0;
 		this.estimatedParameter = this.currentParameter = initializeParameter();
-		if (this.estimatedParameter == null)
+		initializeNotify();
+		if (this.estimatedParameter == null) {
+			finishNotify();
 			return null;
+		}
 		
 		this.currentIteration = 1;
 		int maxIteration = getMaxIteration();
@@ -62,10 +65,17 @@ public abstract class GEM extends AbstractEM {
 				this.previousParameter = this.currentParameter;
 				this.currentParameter = this.estimatedParameter;
 				this.currentIteration++;
+				permuteNotify();
 			}
 			
 		}
 		
+		if (this.estimatedParameter != null)
+			this.currentParameter = this.estimatedParameter;
+		else if (this.currentParameter != null)
+			this.estimatedParameter = this.currentParameter;
+
+		finishNotify();
 		return this.estimatedParameter;
 	}
 

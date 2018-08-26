@@ -144,12 +144,30 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 
 	
 	/**
+	 * Setting current iteration.
+	 * @param currentIteration current iteration.
+	 */
+	public synchronized void setCurrentIteration(int currentIteration) {
+		this.currentIteration = currentIteration;
+	}
+	
+	
+	/**
 	 * Getting previous parameter.
 	 * @return previous parameter.
 	 */
 	public synchronized Object getPreviousParameter() {
 		// TODO Auto-generated method stub
 		return previousParameter;
+	}
+
+	
+	/**
+	 * Setting previous parameter to this regression model. Please use this method carefully.
+	 * @param previousParameter previous parameter.
+	 */
+	public synchronized void setPreviousParameter(Object previousParameter) {
+		this.previousParameter = previousParameter;
 	}
 
 	
@@ -160,6 +178,15 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	}
 
 
+	/**
+	 * Setting current parameter to this regression model. Please use this method carefully.
+	 * @param currentParameter current parameter.
+	 */
+	public synchronized void setCurrentParameter(Object currentParameter) {
+		this.currentParameter = currentParameter;
+	}
+
+	
 	@Override
 	public synchronized Object getEstimatedParameter() {
 		// TODO Auto-generated method stub
@@ -167,6 +194,15 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	}
 
 
+	/**
+	 * Setting estimated parameter to this regression model. Please use this method carefully.
+	 * @param estimatedParameter estimated parameter.
+	 */
+	public synchronized void setEstimatedParameter(Object estimatedParameter) {
+		this.estimatedParameter = estimatedParameter;
+	}
+	
+	
 	@Override
 	public Object getParameter() {
 		// TODO Auto-generated method stub
@@ -175,16 +211,28 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	
 	
 	/**
-	 * Setting specified parameter and iteration to this regression model. Please use this method carefully.
-	 * @param parameter specified parameter.
-	 * @param iteration current parameter.
+	 * Notifying initialization in learning process.
 	 */
-	public synchronized void setParameter(Object parameter, int iteration) {
-		this.currentParameter = parameter;
-		this.estimatedParameter = parameter;
-		this.currentIteration = iteration;
+	public synchronized void initializeNotify() {
+		
+	}
+
+	
+	/**
+	 * Notifying permutation in learning process.
+	 */
+	public synchronized void permuteNotify() {
+		
 	}
 	
+	
+	/**
+	 * Notifying finish in learning process.
+	 */
+	public synchronized void finishNotify() {
+		
+	}
+
 	
 	/**
 	 * Getting maximum number of iterations.
