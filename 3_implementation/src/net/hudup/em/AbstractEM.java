@@ -213,7 +213,7 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	/**
 	 * Notifying initialization in learning process.
 	 */
-	public synchronized void initializeNotify() {
+	protected void initializeNotify() {
 		
 	}
 
@@ -221,7 +221,7 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	/**
 	 * Notifying permutation in learning process.
 	 */
-	public synchronized void permuteNotify() {
+	protected void permuteNotify() {
 		
 	}
 	
@@ -229,7 +229,7 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	/**
 	 * Notifying finish in learning process.
 	 */
-	public synchronized void finishNotify() {
+	protected void finishNotify() {
 		
 	}
 
