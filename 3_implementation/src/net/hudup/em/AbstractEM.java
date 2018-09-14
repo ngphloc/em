@@ -33,13 +33,13 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	/**
 	 * Name of maximum iteration.
 	 */
-	protected final static String EM_MAX_ITERATION_FIELD = "em_max_iteration";
+	public final static String EM_MAX_ITERATION_FIELD = "em_max_iteration";
 	
 	
 	/**
 	 * Name of epsilon field for EM, stored in configuration.
 	 */
-	protected final static String EM_EPSILON_FIELD = "em_epsilon";
+	public final static String EM_EPSILON_FIELD = "em_epsilon";
 
 	
 	/**
@@ -83,17 +83,17 @@ public abstract class AbstractEM extends AbstractTestingAlg implements EM {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized void setup(Dataset dataset, Object... info) throws Exception {
+	public synchronized void setup(Dataset dataset, Object...info) throws Exception {
 		unsetup();
 		this.dataset = dataset;
 		if (info != null && info.length > 0 && (info[0] instanceof Fetcher<?>))
 			this.sample = (Fetcher<Profile>)info[0];
-		else
+		else if (dataset != null)
 			this.sample = dataset.fetchSample();
 		
 		this.estimatedParameter = this.currentParameter = this.previousParameter = this.statistics = null;
 		this.currentIteration = 0;
-		learn();
+		learn(info);
 		
 		SetupAlgEvent evt = new SetupAlgEvent(
 				this,
